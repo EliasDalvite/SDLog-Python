@@ -1,13 +1,13 @@
 import threading
 import socket
 import traceback
-
+import time
 import logger
 
 porta = 5555
 host = ""
 
-# Cria um objeto socket para IPv4 e TCP
+# Cria um objeto socket para IPv4 e UDP
 listener_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Inicializa socket na porta e endereço especificados
@@ -19,10 +19,11 @@ print("Ouvindo na porta {}...".format(porta))
 def listen():
     try:
         while True:
-                data = listener_socket.recv(2048)
-                if not data:
-                    break
-                logger.loga_info(data.decode())
+            hora = time.time()
+            data = listener_socket.recv(1024)
+            if not data:
+                break
+            logger.loga_info(f"{data.decode()} // Hora: {(int(hora)-10800)}")
     except:
         traceback.print_exc()
         listener_socket.close()
