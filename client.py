@@ -3,8 +3,9 @@ import time
 import socket
 import traceback
 
-porta = 5555
-host = "127.0.0.1"
+# Porta e IP do listener q vou mandar
+porta = 5000
+host = "localhost"
 
 # Cria um objeto socket para IPv4 e UDP
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -18,7 +19,7 @@ def send():
         seq = 0
         while True:
             seq += 1
-            message = f"Identificador: {threading.current_thread().ident} // Sequencia: {seq}"
+            message = f"{threading.current_thread().ident}-{seq}"
             client_socket.sendall(message.encode())
             print(f"Mensagem enviada: {message}")
             time.sleep(0.5)
